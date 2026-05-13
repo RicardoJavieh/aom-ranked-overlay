@@ -66,30 +66,21 @@ class Overlay(QWidget):
     def initUI(self):
 
         self.setWindowTitle("AoM Overlay")
-
         self.setWindowFlags(
             Qt.WindowType.FramelessWindowHint |
             Qt.WindowType.WindowStaysOnTopHint |
             Qt.WindowType.Tool
         )
-
-        self.setAttribute(
-            Qt.WidgetAttribute.WA_TranslucentBackground
-        )
-
-        self.setAttribute(
-            Qt.WidgetAttribute.WA_TransparentForMouseEvents
-        )
-
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         self.setGeometry(
-            1480,
-            120,
+            10,
+            300,
             270,
             96
         )
 
         self.root = QVBoxLayout()
-
         self.root.setContentsMargins(
             6,
             6,
@@ -98,10 +89,7 @@ class Overlay(QWidget):
         )
 
         self.root.setSpacing(1)
-
-        # TITLE
         self.title = QLabel("RANKED")
-
         self.title.setFont(
             QFont(
                 "Segoe UI",
@@ -109,7 +97,6 @@ class Overlay(QWidget):
                 QFont.Weight.Bold
             )
         )
-
         self.title.setStyleSheet("""
             color: #d6b36a;
             background: transparent;
@@ -117,41 +104,28 @@ class Overlay(QWidget):
         """)
 
         self.root.addWidget(self.title)
-
         self.setLayout(self.root)
-
         self.update_players(self.players)
 
     def clear_players(self):
-
-        # borrar widgets excepto titulo
         while self.root.count() > 1:
-
             item = self.root.takeAt(1)
-
             widget = item.widget()
-
             if widget:
                 widget.deleteLater()
 
     def update_players(self, players):
 
         self.players = players
-
         self.clear_players()
 
         for alias in self.players:
-
             try:
-
                 player = Player(alias)
-
                 row = PlayerRow(player)
-
                 self.root.addWidget(row)
 
             except Exception as e:
-
                 print(e)
 
         self.adjustSize()
