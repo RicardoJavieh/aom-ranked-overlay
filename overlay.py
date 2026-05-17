@@ -16,6 +16,7 @@ from PyQt6.QtWidgets import (
 from player import Player
 from table import PlayerRow
 
+from timer import timer
 
 class Overlay(QWidget):
 
@@ -25,7 +26,7 @@ class Overlay(QWidget):
         self.players = _players
 
         self.initUI()
-
+    @timer
     def paintEvent(self, event):
 
         painter = QPainter(self)
@@ -62,7 +63,7 @@ class Overlay(QWidget):
             10,
             10
         )
-
+    @timer
     def initUI(self):
 
         self.setWindowTitle("AoM Overlay")
@@ -106,14 +107,14 @@ class Overlay(QWidget):
         self.root.addWidget(self.title)
         self.setLayout(self.root)
         self.update_players(self.players)
-
+    @timer
     def clear_players(self):
         while self.root.count() > 1:
             item = self.root.takeAt(1)
             widget = item.widget()
             if widget:
                 widget.deleteLater()
-
+    @timer
     def update_players(self, players):
 
         self.players = players

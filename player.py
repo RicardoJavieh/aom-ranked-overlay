@@ -2,6 +2,8 @@ import requests
 
 from config import AOMSTATS_PROFILES_URL, HEADERS, FLAG_ICON_URL
 
+from timer import timer
+
 class Player:
 
     def __init__(self, alias):
@@ -13,6 +15,7 @@ class Player:
         self.sup_team_rank = 0
         self.sup_team_rating = 0
 
+    @timer
     def fetchFlag(self):
 
         if not self.countryCode:
@@ -29,6 +32,7 @@ class Player:
         response.raise_for_status()
         self.countrySVGFlag = response.text
 
+    @timer
     def fetch(self):
 
         response = requests.get(
